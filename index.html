@@ -10,20 +10,14 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        CABAL SEA SAGA | Referral Event 2026
-    </title>
+    <title>CABAL SEA SAGA | Referral Event 2026</title>
 
     <meta
         name="description"
-        content="CABAL SEA SAGA Referral Event 2026 - Live Referral Standings"
+        content="CABAL SEA SAGA Referral Event 2026"
     >
 
-    <!-- Main stylesheet -->
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="./style.css">
 
 </head>
 
@@ -32,23 +26,17 @@
 
 
     <!-- =====================================================
-         MAIN CONTENT
+         HEADER
          ===================================================== -->
 
-    <main class="container">
+    <header class="hero">
 
-
-        <!-- =================================================
-             HERO
-             ================================================= -->
-
-        <header class="hero">
-
+        <div class="hero-content">
 
             <!-- SERVER LOGO -->
 
             <img
-                src="logo.png"
+                src="./logo.png"
                 alt="CABAL SEA SAGA Logo"
                 class="server-logo"
             >
@@ -63,40 +51,38 @@
 
             <!-- EVENT NAME -->
 
-            <p>
+            <p class="event-title">
                 REFERRAL EVENT 2026
             </p>
 
+        </div>
 
-        </header>
+    </header>
 
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="container">
 
 
         <!-- =================================================
              COUNTDOWN
              ================================================= -->
 
-        <section
-            class="countdown-box"
-        >
+        <section class="countdown-box">
 
-            <div
-                class="countdown-label"
-            >
-                EVENT ENDS
+            <div class="countdown-label">
+                REFERRAL EVENT ENDS
             </div>
 
-
-            <div
-                id="countdown"
-            >
+            <div id="countdown">
                 LOADING...
             </div>
 
-
-            <div
-                id="lastUpdated"
-            >
+            <div id="lastUpdated">
                 Loading standings...
             </div>
 
@@ -108,94 +94,77 @@
              TOP REFERRERS
              ================================================= -->
 
-        <h2
-            class="section-title"
-        >
-            Top Referrers
+        <h2 class="section-title">
+            TOP REFERRERS
         </h2>
 
 
-        <section
-            id="podium"
-        >
+        <section id="podium">
 
-            <!--
-                JavaScript will automatically
-                insert the Top 3 players here.
-            -->
+            <!-- JavaScript inserts Top 3 here -->
 
         </section>
 
 
 
         <!-- =================================================
-             FULL STANDINGS
+             CURRENT STANDINGS
              ================================================= -->
 
-        <h2
-            class="section-title"
-        >
-            Current Standings
+        <h2 class="section-title">
+            CURRENT STANDINGS
         </h2>
 
 
-        <section
-            class="leaderboard"
-        >
+        <section class="leaderboard">
 
-            <table>
+            <div class="table-wrapper">
 
+                <table>
 
-                <!-- TABLE HEADER -->
+                    <thead>
 
-                <thead>
+                        <tr>
 
-                    <tr>
+                            <th>
+                                Rank
+                            </th>
 
-                        <th>
-                            Rank
-                        </th>
+                            <th>
+                                IGN
+                            </th>
 
-                        <th>
-                            IGN
-                        </th>
+                            <th>
+                                Referrals
+                            </th>
 
-                        <th>
-                            Referrals
-                        </th>
+                            <th>
+                                Reward
+                            </th>
 
-                        <th>
-                            Reward
-                        </th>
+                        </tr>
 
-                    </tr>
-
-                </thead>
+                    </thead>
 
 
-                <!-- TABLE DATA -->
+                    <tbody id="standings">
 
-                <tbody
-                    id="standings"
-                >
+                        <tr>
 
-                    <tr>
+                            <td
+                                colspan="4"
+                                class="loading"
+                            >
+                                Loading current standings...
+                            </td>
 
-                        <td
-                            colspan="4"
-                            class="loading"
-                        >
+                        </tr>
 
-                            Loading current standings...
+                    </tbody>
 
-                        </td>
+                </table>
 
-                    </tr>
-
-                </tbody>
-
-
-            </table>
+            </div>
 
         </section>
 
@@ -205,20 +174,21 @@
              EVENT INFORMATION
              ================================================= -->
 
-        <h2
-            class="section-title"
-        >
-            Event Information
+        <h2 class="section-title">
+            EVENT INFORMATION
         </h2>
 
 
-        <section
-            class="event-info"
-        >
+        <section class="event-info">
 
-            <div
-                class="info-card"
-            >
+
+            <!-- DEADLINE -->
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    DEADLINE
+                </div>
 
                 <h3>
                     Referral Deadline
@@ -231,24 +201,36 @@
             </div>
 
 
-            <div
-                class="info-card"
-            >
+
+            <!-- REWARDS -->
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    REWARDS
+                </div>
 
                 <h3>
-                    Rewards
+                    Ranking Rewards
                 </h3>
 
                 <p>
-                    Rewards will be announced soon.
+                    Certain rankings will receive
+                    specific rewards. Rewards will
+                    be posted soon.
                 </p>
 
             </div>
 
 
-            <div
-                class="info-card"
-            >
+
+            <!-- REQUIREMENTS -->
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    REQUIREMENTS
+                </div>
 
                 <h3>
                     Referral Requirements
@@ -262,21 +244,28 @@
             </div>
 
 
-            <div
-                class="info-card"
-            >
+
+            <!-- FAIR PLAY -->
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    FAIR PLAY
+                </div>
 
                 <h3>
                     Fair Play
                 </h3>
 
                 <p>
-                    Players must follow all event
-                    rules. Violators will be punished
+                    All participants are expected
+                    to follow the event rules.
+                    Violators will be punished
                     accordingly.
                 </p>
 
             </div>
+
 
         </section>
 
@@ -291,13 +280,13 @@
 
     <footer>
 
-        <p>
+        <div class="footer-title">
             CABAL SEA SAGA
-        </p>
+        </div>
 
-        <p>
-            Referral Event 2026
-        </p>
+        <div>
+            REFERRAL EVENT 2026
+        </div>
 
     </footer>
 
@@ -307,9 +296,7 @@
          JAVASCRIPT
          ===================================================== -->
 
-    <script
-        src="script.js"
-    ></script>
+    <script src="./script.js"></script>
 
 
 </body>
