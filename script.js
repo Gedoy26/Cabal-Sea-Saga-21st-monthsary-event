@@ -1,36 +1,22 @@
 /* =========================================================
    CABAL SEA SAGA
    REFERRAL EVENT 2026
-
-   GOOGLE SHEETS LEADERBOARD
+   LIVE GOOGLE SHEETS LEADERBOARD
    ========================================================= */
 
 
 /* =========================================================
-   GOOGLE SHEET SETTINGS
+   GOOGLE SHEETS CONNECTION
    ========================================================= */
 
-// Your Google Spreadsheet ID
-const SHEET_ID =
-    "1EHqhhNsBeJxLXSaGi-whVUbwFdRey8_Ybhx2XgSGVxs";
-
-// The exact name of the tab
-const SHEET_NAME =
-    "Referral Counter";
-
-
-/*
-   Google Sheets Visualization API URL.
-
-   The website uses this to read the published
-   Referral Counter tab.
-*/
+// Published Google Sheet
+// Tab: Referral Counter
+// A = IGN
+// B = Referral Count
+// C = Rank
 
 const SHEET_URL =
-    "https://docs.google.com/spreadsheets/d/" +
-    SHEET_ID +
-    "/gviz/tq?sheet=" +
-    encodeURIComponent(SHEET_NAME);
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTGD4YlzmRUcGYxjnxPx6ulbrYUoCMBBamAHrEJoalGgYDqmRhQgrxIDKWsv-K1J-uJZ9wwYbcxmPGe/pub?output=csv&gid=1450898287";
 
 
 /* =========================================================
@@ -38,6 +24,7 @@ const SHEET_URL =
    ========================================================= */
 
 // September 7, 2026 at 11:59:59 PM Philippine Time
+
 const EVENT_DEADLINE =
     "2026-09-07T23:59:59+08:00";
 
@@ -56,199 +43,248 @@ async function loadStandings() {
 
 
     /*
-       Show loading message while the sheet
-       is being retrieved.
-    */
+     * Show loading message
+     */
 
-    table.innerHTML = `
-        <tr>
-            <td colspan="4" class="loading">
-                Loading current standings...
-            </td>
-        </tr>
-    `;
+    if (table) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="4" class="loading">
+                    Loading current standings...
+                </td>
+            </tr>
+        `;
+
+    }
 
 
     try {
 
         /*
-           Request the Google Sheet.
-        */
+         * Add timestamp to prevent the browser
+         * from showing an old cached version.
+         */
 
-        const response =
-            await fetch(SHEET_URL);
+        const url =
+            SHEET_URL +
+            "&cache=" +
+            Date.now();
 
 
         /*
-           Check if Google responded successfully.
-        */
+         * Request the published Google Sheet.
+         */
+
+        const response =
+            await fetch(url);
+
+
+        /*
+         * Make sure the request succeeded.
+         */
 
         if (!response.ok) {
 
             throw new Error(
-                "Unable to access Google Sheet."
+                "Google Sheet could not be accessed."
             );
 
         }
 
 
         /*
-           Get the response as text.
-        */
+         * Get CSV data.
+         */
 
-        const text =
+        const csv =
             await response.text();
 
 
-        /*
-           Google returns something similar to:
-
-           google.visualization.Query.setResponse({...});
-
-           We extract only the JSON portion.
-        */
-
-        const start =
-            text.indexOf("{");
-
-        const end =
-            text.lastIndexOf("}");
-
-
-        if (
-            start === -1 ||
-            end === -1
-        ) {
-
-            throw new Error(
-                "Invalid Google Sheet response."
-            );
-
-        }
-
-
-        const jsonText =
-            text.substring(
-                start,
-                end + 1
-            );
+        console.log(
+            "Google Sheet CSV:",
+            csv
+        );
 
 
         /*
-           Convert the response to JSON.
-        */
+         * Convert CSV into rows.
+         */
 
-        const data =
-            JSON.parse(jsonText);
+        const rows =
+            parseCSV(csv);
+
+
+        console.log(
+            "Parsed Google Sheet rows:",
+            rows
+        );
 
 
         /*
-           Store players here.
-        */
+         * Store player information.
+         */
 
         const players = [];
 
 
         /*
-           Read every row from the sheet.
-        */
+         * Row 0 is the header.
+         *
+         * Example:
+         *
+         * IGN | REFERRAL | RANK
+         *
+         * Start at row 1.
+         */
 
-        data.table.rows.forEach(
-            function(row) {
+        for (
+            let i = 1;
+            i < rows.length;
+            i++
+        ) {
 
-                const cells =
-                    row.c || [];
-
-
-                /*
-                   COLUMN A
-                   IGN
-                */
-
-                const ign =
-                    cells[0]?.v;
-
-
-                /*
-                   COLUMN B
-                   REFERRAL COUNT
-                */
-
-                const referralValue =
-                    cells[1]?.v;
+            const row =
+                rows[i];
 
 
-                /*
-                   COLUMN C
-                   RANK
-                */
+            /*
+             * Skip empty rows.
+             */
 
-                const rankValue =
-                    cells[2]?.v;
+            if (
+                !row ||
+                row.length === 0
+            ) {
 
-
-                /*
-                   Convert referral count
-                   into a number.
-                */
-
-                const referrals =
-                    Number(
-                        referralValue || 0
-                    );
-
-
-                /*
-                   Convert rank into a number.
-                */
-
-                const rank =
-                    Number(
-                        rankValue || 0
-                    );
-
-
-                /*
-                   Ignore empty rows.
-
-                   This also prevents the header
-                   row from being displayed as a player.
-                */
-
-                if (
-                    ign !== undefined &&
-                    ign !== null &&
-                    String(ign).trim() !== "" &&
-                    String(ign).toUpperCase() !== "IGN"
-                ) {
-
-                    players.push({
-
-                        ign:
-                            String(ign).trim(),
-
-                        referrals:
-                            referrals,
-
-                        rank:
-                            rank,
-
-                        reward:
-                            "TBA"
-
-                    });
-
-                }
+                continue;
 
             }
-        );
+
+
+            /*
+             * COLUMN A
+             *
+             * IGN
+             */
+
+            const ign =
+                String(
+                    row[0] || ""
+                ).trim();
+
+
+            /*
+             * COLUMN B
+             *
+             * REFERRAL COUNT
+             */
+
+            const referralText =
+                String(
+                    row[1] || "0"
+                );
+
+
+            /*
+             * Remove anything that isn't
+             * a number.
+             *
+             * Example:
+             *
+             * "15"
+             * "15 referrals"
+             *
+             * both become 15.
+             */
+
+            const referrals =
+                parseInt(
+                    referralText.replace(
+                        /[^0-9-]/g,
+                        ""
+                    ),
+                    10
+                ) || 0;
+
+
+            /*
+             * COLUMN C
+             *
+             * RANK
+             */
+
+            const rankText =
+                String(
+                    row[2] || ""
+                );
+
+
+            const rank =
+                parseInt(
+                    rankText.replace(
+                        /[^0-9-]/g,
+                        ""
+                    ),
+                    10
+                ) || 0;
+
+
+            /*
+             * Ignore blank IGN rows.
+             */
+
+            if (
+                ign === ""
+            ) {
+
+                continue;
+
+            }
+
+
+            /*
+             * Ignore the header if Google
+             * happens to include it.
+             */
+
+            if (
+                ign.toUpperCase() === "IGN"
+            ) {
+
+                continue;
+
+            }
+
+
+            /*
+             * Add player.
+             */
+
+            players.push({
+
+                ign:
+                    ign,
+
+                referrals:
+                    referrals,
+
+                rank:
+                    rank,
+
+                reward:
+                    "TBA"
+
+            });
+
+        }
 
 
         /*
-           Sort players by referral count.
-
-           Highest referral count = highest rank.
-        */
+         * Sort by referral count.
+         *
+         * Highest referral count goes first.
+         */
 
         players.sort(
             function(a, b) {
@@ -262,104 +298,284 @@ async function loadStandings() {
         );
 
 
+        console.log(
+            "Final players:",
+            players
+        );
+
+
         /*
-           Display the top 3.
-        */
+         * Display podium.
+         */
 
         renderPodium(players);
 
 
         /*
-           Display the complete leaderboard.
-        */
+         * Display leaderboard.
+         */
 
         renderLeaderboard(players);
 
 
         /*
-           Update the timestamp.
-        */
+         * Update last updated time.
+         */
 
-        const updated =
+        const lastUpdated =
             document.getElementById(
                 "lastUpdated"
             );
 
 
-        if (updated) {
+        if (lastUpdated) {
 
-            const now =
-                new Date();
-
-
-            updated.textContent =
-                now.toLocaleTimeString(
+            lastUpdated.textContent =
+                "Updated " +
+                new Date().toLocaleTimeString(
                     "en-PH",
                     {
                         hour: "2-digit",
-                        minute: "2-digit"
+                        minute: "2-digit",
+                        second: "2-digit"
                     }
                 );
 
         }
 
 
-        console.log(
-            "Leaderboard loaded successfully.",
-            players
-        );
-
-
     } catch (error) {
 
-        /*
-           Show the error in the browser console.
-        */
-
         console.error(
-            "Google Sheet Error:",
+            "Google Sheet error:",
             error
         );
 
 
         /*
-           Clear podium.
-        */
+         * Clear podium.
+         */
 
-        podium.innerHTML = "";
+        if (podium) {
+
+            podium.innerHTML = "";
+
+        }
 
 
         /*
-           Display an error message.
-        */
+         * Show error message.
+         */
 
-        table.innerHTML = `
+        if (table) {
 
-            <tr>
+            table.innerHTML = `
 
-                <td
-                    colspan="4"
-                    class="loading"
-                >
+                <tr>
 
-                    Unable to load the current
-                    standings.
+                    <td
+                        colspan="4"
+                        class="loading"
+                    >
 
-                    <br><br>
+                        Unable to load the
+                        current standings.
 
-                    Please make sure the
-                    <strong>
-                        Referral Counter
-                    </strong>
-                    tab is published to the web.
+                        <br><br>
 
-                </td>
+                        Please make sure the
+                        <strong>
+                            Referral Counter
+                        </strong>
+                        tab is published to the web.
 
-            </tr>
+                    </td>
 
-        `;
+                </tr>
+
+            `;
+
+        }
 
     }
+
+}
+
+
+/* =========================================================
+   CSV PARSER
+   ========================================================= */
+
+function parseCSV(text) {
+
+    const rows = [];
+
+    let currentRow = [];
+
+    let currentValue = "";
+
+    let insideQuotes = false;
+
+
+    /*
+     * Go through every character.
+     */
+
+    for (
+        let i = 0;
+        i < text.length;
+        i++
+    ) {
+
+        const character =
+            text[i];
+
+
+        const nextCharacter =
+            text[i + 1];
+
+
+        /*
+         * Double quote inside quoted text.
+         */
+
+        if (
+            character === '"' &&
+            insideQuotes &&
+            nextCharacter === '"'
+        ) {
+
+            currentValue += '"';
+
+            i++;
+
+            continue;
+
+        }
+
+
+        /*
+         * Start/end quoted field.
+         */
+
+        if (
+            character === '"'
+        ) {
+
+            insideQuotes =
+                !insideQuotes;
+
+            continue;
+
+        }
+
+
+        /*
+         * Comma = next column.
+         */
+
+        if (
+            character === "," &&
+            !insideQuotes
+        ) {
+
+            currentRow.push(
+                currentValue
+            );
+
+            currentValue = "";
+
+            continue;
+
+        }
+
+
+        /*
+         * New line = next row.
+         */
+
+        if (
+            (
+                character === "\n" ||
+                character === "\r"
+            ) &&
+            !insideQuotes
+        ) {
+
+            /*
+             * Handle Windows CRLF.
+             */
+
+            if (
+                character === "\r" &&
+                nextCharacter === "\n"
+            ) {
+
+                i++;
+
+            }
+
+
+            currentRow.push(
+                currentValue
+            );
+
+            currentValue = "";
+
+
+            /*
+             * Add row only if it has data.
+             */
+
+            if (
+                currentRow.length > 0
+            ) {
+
+                rows.push(
+                    currentRow
+                );
+
+            }
+
+
+            currentRow = [];
+
+            continue;
+
+        }
+
+
+        /*
+         * Normal character.
+         */
+
+        currentValue +=
+            character;
+
+    }
+
+
+    /*
+     * Add the final row.
+     */
+
+    if (
+        currentValue !== "" ||
+        currentRow.length > 0
+    ) {
+
+        currentRow.push(
+            currentValue
+        );
+
+        rows.push(
+            currentRow
+        );
+
+    }
+
+
+    return rows;
 
 }
 
@@ -377,12 +593,22 @@ function renderPodium(players) {
 
 
     /*
-       If there are no players,
-       don't show a podium.
-    */
+     * If the website doesn't have
+     * a podium element, stop here.
+     */
+
+    if (!podium) {
+
+        return;
+
+    }
+
+
+    /*
+     * No players.
+     */
 
     if (
-        !players ||
         players.length === 0
     ) {
 
@@ -394,8 +620,8 @@ function renderPodium(players) {
 
 
     /*
-       Medal icons.
-    */
+     * Medals.
+     */
 
     const medals = [
 
@@ -407,8 +633,8 @@ function renderPodium(players) {
 
 
     /*
-       Place names.
-    */
+     * Positions.
+     */
 
     const places = [
 
@@ -420,16 +646,19 @@ function renderPodium(players) {
 
 
     /*
-       Only take the first three players.
-    */
+     * Only display top 3.
+     */
 
     const topThree =
-        players.slice(0, 3);
+        players.slice(
+            0,
+            3
+        );
 
 
     /*
-       Create the podium.
-    */
+     * Generate podium HTML.
+     */
 
     podium.innerHTML =
 
@@ -450,7 +679,9 @@ function renderPodium(players) {
                             "
                         >
 
-                            <div class="medal">
+                            <div
+                                class="medal"
+                            >
                                 ${medals[index]}
                             </div>
 
@@ -479,10 +710,10 @@ function renderPodium(players) {
 
                                     ${player.referrals}
 
-                                    valid referral${
+                                    ${
                                         player.referrals === 1
-                                            ? ""
-                                            : "s"
+                                            ? " referral"
+                                            : " referrals"
                                     }
 
                                 </div>
@@ -513,11 +744,22 @@ function renderLeaderboard(players) {
 
 
     /*
-       No players.
-    */
+     * If table doesn't exist,
+     * stop here.
+     */
+
+    if (!table) {
+
+        return;
+
+    }
+
+
+    /*
+     * No players.
+     */
 
     if (
-        !players ||
         players.length === 0
     ) {
 
@@ -544,8 +786,8 @@ function renderLeaderboard(players) {
 
 
     /*
-       Create table rows.
-    */
+     * Generate all rows.
+     */
 
     table.innerHTML =
 
@@ -554,12 +796,9 @@ function renderLeaderboard(players) {
                 function(player, index) {
 
                     /*
-                       Website rank.
-
-                       Because the players are sorted
-                       by referral count, this will
-                       always show the current order.
-                    */
+                     * Rank is based on
+                     * current sorted position.
+                     */
 
                     const currentRank =
                         index + 1;
@@ -569,7 +808,9 @@ function renderLeaderboard(players) {
 
                         <tr>
 
-                            <td class="rank">
+                            <td
+                                class="rank"
+                            >
                                 #${currentRank}
                             </td>
 
@@ -585,12 +826,16 @@ function renderLeaderboard(players) {
                             </td>
 
 
-                            <td class="referrals">
+                            <td
+                                class="referrals"
+                            >
                                 ${player.referrals}
                             </td>
 
 
-                            <td class="reward">
+                            <td
+                                class="reward"
+                            >
                                 ${escapeHTML(
                                     player.reward
                                 )}
@@ -620,8 +865,20 @@ function updateCountdown() {
 
 
     /*
-       Get event deadline.
-    */
+     * If the countdown element
+     * doesn't exist, stop.
+     */
+
+    if (!countdown) {
+
+        return;
+
+    }
+
+
+    /*
+     * Calculate remaining time.
+     */
 
     const deadline =
         new Date(
@@ -629,25 +886,18 @@ function updateCountdown() {
         ).getTime();
 
 
-    /*
-       Get current time.
-    */
-
-    const now =
+    const currentTime =
         Date.now();
 
 
-    /*
-       Calculate remaining time.
-    */
-
     const difference =
-        deadline - now;
+        deadline -
+        currentTime;
 
 
     /*
-       Event is over.
-    */
+     * Event ended.
+     */
 
     if (
         difference <= 0
@@ -662,81 +912,86 @@ function updateCountdown() {
 
 
     /*
-       Calculate days.
-    */
+     * Days.
+     */
 
     const days =
         Math.floor(
             difference /
-            (1000 * 60 * 60 * 24)
+            86400000
         );
 
 
     /*
-       Calculate hours.
-    */
+     * Hours.
+     */
 
     const hours =
         Math.floor(
             (
                 difference %
-                (1000 * 60 * 60 * 24)
+                86400000
             ) /
-            (1000 * 60 * 60)
+            3600000
         );
 
 
     /*
-       Calculate minutes.
-    */
+     * Minutes.
+     */
 
     const minutes =
         Math.floor(
             (
                 difference %
-                (1000 * 60 * 60)
+                3600000
             ) /
-            (1000 * 60)
+            60000
         );
 
 
     /*
-       Calculate seconds.
-    */
+     * Seconds.
+     */
 
     const seconds =
         Math.floor(
             (
                 difference %
-                (1000 * 60)
+                60000
             ) /
             1000
         );
 
 
     /*
-       Display countdown.
-
-       Example:
-
-       19D 04:32:18
-    */
+     * Display countdown.
+     */
 
     countdown.textContent =
 
         `${days}D ` +
 
-        `${String(hours).padStart(2, "0")}:` +
+        `${String(hours).padStart(
+            2,
+            "0"
+        )}:` +
 
-        `${String(minutes).padStart(2, "0")}:` +
+        `${String(minutes).padStart(
+            2,
+            "0"
+        )}:` +
 
-        `${String(seconds).padStart(2, "0")}`;
+        `${String(seconds).padStart(
+            2,
+            "0"
+        )}`;
 
 }
 
 
 /* =========================================================
-   HTML SECURITY
+   SECURITY
    ========================================================= */
 
 function escapeHTML(value) {
@@ -779,20 +1034,20 @@ function escapeHTML(value) {
 
 
 /* =========================================================
-   INITIALIZE WEBSITE
+   INITIALIZE
    ========================================================= */
 
 
 /*
-   Start countdown.
-*/
+ * Start countdown immediately.
+ */
 
 updateCountdown();
 
 
 /*
-   Update countdown every second.
-*/
+ * Update countdown every second.
+ */
 
 setInterval(
     updateCountdown,
@@ -801,24 +1056,18 @@ setInterval(
 
 
 /*
-   Load Google Sheet immediately
-   when the page opens.
-*/
+ * Load the Google Sheet immediately.
+ */
 
 loadStandings();
 
 
 /*
-   Refresh Google Sheet every 5 minutes.
-
-   You can change 5 to another number
-   if you want more/less frequent updates.
-
-   Example:
-   1 * 60 * 1000 = 1 minute
-   5 * 60 * 1000 = 5 minutes
-   10 * 60 * 1000 = 10 minutes
-*/
+ * Refresh leaderboard every 5 minutes.
+ *
+ * Google Sheets itself may take a few minutes
+ * to update its published version.
+ */
 
 setInterval(
     loadStandings,
