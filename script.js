@@ -1,43 +1,89 @@
 /* =========================================================
    CABAL SEA SAGA
-   REFERRAL EVENT
-   LIVE GOOGLE SHEETS LEADERBOARD
+   REFERRAL EVENT 2026
+   GOOGLE SHEETS + LEADERBOARD
    ========================================================= */
 
 
 /* =========================================================
-   GOOGLE SHEETS SETTINGS
+   GOOGLE SHEETS
    ========================================================= */
-
-const SHEET_ID =
-    "1EHqhhNsBeJxLXSaGi-whVUbwFdRey8_Ybhx2XgSGVxs";
-
-const SHEET_GID =
-    "1450898287";
-
-
-/*
- * Google Visualization API.
- *
- * This specifically requests the
- * Referral Counter tab.
- */
 
 const SHEET_URL =
-    "https://docs.google.com/spreadsheets/d/" +
-    SHEET_ID +
-    "/gviz/tq" +
-    "?gid=" +
-    SHEET_GID +
-    "&tqx=out:json";
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTGD4YlzmRUcGYxjnxPx6ulbrYUoCMBBamAHrEJoalGgYDqmRhQgrxIDKWsv-K1J-uJZ9wwYbcxmPGe/pub?gid=1450898287&single=true&output=csv";
 
 
 /* =========================================================
-   EVENT SETTINGS
+   REWARDS
    ========================================================= */
 
-const EVENT_DEADLINE =
-    "2026-09-07T23:59:59+08:00";
+/*
+   Add or change rewards here.
+
+   Example:
+
+   1: "10,000 Force Gems"
+   2: "7,500 Force Gems"
+
+   You can keep adding:
+
+   6: "Reward"
+   7: "Reward"
+   8: "Reward"
+
+   Players beyond the last listed reward
+   will show "No Reward".
+*/
+
+const rewards = {
+
+    1: "10,000 Force Gems",
+
+    2: "7,500 Force Gems",
+
+    3: "5,000 Force Gems",
+
+    4: "3,000 Force Gems",
+
+    5: "2,000 Force Gems"
+
+};
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 
 /* =========================================================
@@ -46,28 +92,58 @@ const EVENT_DEADLINE =
 
 async function loadStandings() {
 
-    console.log(
-        "Loading Google Sheet..."
-    );
-
-
     const table =
         document.getElementById(
             "standings"
         );
 
 
-    const podium =
-        document.getElementById(
-            "podium"
+    try {
+
+        const response =
+            await fetch(
+                SHEET_URL
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load Google Sheet."
+            );
+
+        }
+
+
+        const csv =
+            await response.text();
+
+
+        const players =
+            parseCSV(
+                csv
+            );
+
+
+        displayStandings(
+            players
         );
 
 
-    /*
-     * Loading message
-     */
+        updatePodium(
+            players
+        );
 
-    if (table) {
+
+        updateLastUpdated();
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
 
         table.innerHTML = `
 
@@ -78,7 +154,7 @@ async function loadStandings() {
                     class="loading"
                 >
 
-                    Loading current standings...
+                    Unable to load standings.
 
                 </td>
 
@@ -88,510 +164,175 @@ async function loadStandings() {
 
     }
 
+}
 
-    try {
 
-        /*
-         * Prevent browser caching.
-         */
+/* =========================================================
+   CSV PARSER
+   ========================================================= */
 
-        const url =
-            SHEET_URL +
-            "&_=" +
-            Date.now();
+function parseCSV(csv) {
 
+    const lines =
+        csv
+            .trim()
+            .split(/\r?\n/);
 
-        /*
-         * Request Google Sheet.
-         */
 
-        const response =
-            await fetch(url);
+    const players = [];
 
 
-        if (!response.ok) {
+    /*
+       Expected columns:
 
-            throw new Error(
-                "Google Sheet request failed: " +
-                response.status
-            );
+       Column A = IGN
+       Column B = Referral
+       Column C = Rank
+    */
 
-        }
 
+    for (
+        let i = 1;
+        i < lines.length;
+        i++
+    ) {
 
-        /*
-         * Get response text.
-         */
-
-        let text =
-            await response.text();
-
-
-        console.log(
-            "Google response:",
-            text
-        );
-
-
-        /*
-         * Google returns:
-
-         google.visualization.Query.setResponse({...});
-
-         We need to extract the JSON
-         between the parentheses.
-        */
-
-        const start =
-            text.indexOf("(");
-
-
-        const end =
-            text.lastIndexOf(")");
-
-
-        if (
-            start === -1 ||
-            end === -1
-        ) {
-
-            throw new Error(
-                "Invalid Google response."
-            );
-
-        }
-
-
-        const jsonText =
-            text.substring(
-                start + 1,
-                end
-            );
-
-
-        /*
-         * Convert to JavaScript object.
-         */
-
-        const data =
-            JSON.parse(
-                jsonText
-            );
-
-
-        console.log(
-            "Google Sheet data:",
-            data
-        );
-
-
-        /*
-         * Google Sheet rows.
-         */
-
-        const rows =
-            data.table.rows;
-
-
-        const players = [];
-
-
-        /*
-         * Read each row.
-         */
-
-        rows.forEach(
-            function(row) {
-
-                const cells =
-                    row.c || [];
-
-
-                /*
-                 * COLUMN A
-                 *
-                 * IGN
-                 */
-
-                let ign = "";
-
-
-                if (
-                    cells[0] &&
-                    cells[0].v !== null &&
-                    cells[0].v !== undefined
-                ) {
-
-                    ign =
-                        String(
-                            cells[0].v
-                        ).trim();
-
-                }
-
-
-                /*
-                 * Ignore blank rows.
-                 */
-
-                if (
-                    ign === ""
-                ) {
-
-                    return;
-
-                }
-
-
-                /*
-                 * Ignore header row.
-                 */
-
-                if (
-                    ign.toUpperCase() ===
-                    "IGN"
-                ) {
-
-                    return;
-
-                }
-
-
-                /*
-                 * COLUMN B
-                 *
-                 * REFERRAL COUNT
-                 */
-
-                let referrals = 0;
-
-
-                if (
-                    cells[1] &&
-                    cells[1].v !== null &&
-                    cells[1].v !== undefined
-                ) {
-
-                    referrals =
-                        Number(
-                            cells[1].v
-                        ) || 0;
-
-                }
-
-
-                /*
-                 * COLUMN C
-                 *
-                 * RANK
-                 */
-
-                let rank = 0;
-
-
-                if (
-                    cells[2] &&
-                    cells[2].v !== null &&
-                    cells[2].v !== undefined
-                ) {
-
-                    rank =
-                        Number(
-                            cells[2].v
-                        ) || 0;
-
-                }
-
-
-                /*
-                 * Add player.
-                 */
-
-                players.push({
-
-                    ign:
-                        ign,
-
-                    referrals:
-                        referrals,
-
-                    rank:
-                        rank
-
-                });
-
-            }
-        );
-
-
-        /*
-         * Sort using referral count.
-         *
-         * Highest referral count first.
-         */
-
-        players.sort(
-            function(a, b) {
-
-                return (
-                    b.referrals -
-                    a.referrals
-                );
-
-            }
-        );
-
-
-        /*
-         * Display results.
-         */
-
-        renderPodium(
-            players
-        );
-
-
-        renderLeaderboard(
-            players
-        );
-
-
-        /*
-         * Update timestamp.
-         */
-
-        const lastUpdated =
-            document.getElementById(
-                "lastUpdated"
+        const columns =
+            parseCSVLine(
+                lines[i]
             );
 
 
         if (
-            lastUpdated
+            !columns ||
+            columns.length < 2
         ) {
 
-            lastUpdated.textContent =
-                "Updated " +
-                new Date().toLocaleTimeString(
-                    "en-PH",
-                    {
-                        hour:
-                            "2-digit",
-
-                        minute:
-                            "2-digit"
-                    }
-                );
+            continue;
 
         }
 
 
-        console.log(
-            "FINAL PLAYERS:",
-            players
-        );
+        const ign =
+            columns[0]
+                ?.trim();
 
 
-    } catch (error) {
+        const referrals =
+            parseInt(
+                columns[1]
+                    ?.trim()
+            ) || 0;
 
-        console.error(
-            "ERROR LOADING GOOGLE SHEET:",
-            error
-        );
 
+        if (!ign) {
 
-        if (podium) {
-
-            podium.innerHTML = "";
+            continue;
 
         }
 
 
-        if (table) {
+        players.push({
 
-            table.innerHTML = `
+            ign: ign,
 
-                <tr>
+            referrals: referrals
 
-                    <td
-                        colspan="4"
-                        class="loading"
-                    >
-
-                        Unable to load
-                        standings.
-
-                        <br><br>
-
-                        Please check the
-                        Google Sheet connection.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-        }
+        });
 
     }
+
+
+    /*
+       Sort highest referral count first.
+    */
+
+    players.sort(
+        function(a, b) {
+
+            return (
+                b.referrals -
+                a.referrals
+            );
+
+        }
+    );
+
+
+    return players;
 
 }
 
 
 /* =========================================================
-   PODIUM
+   CSV LINE PARSER
    ========================================================= */
 
-function renderPodium(
-    players
-) {
+function parseCSVLine(line) {
 
-    const podium =
-        document.getElementById(
-            "podium"
-        );
+    const result = [];
+
+    let current = "";
+
+    let insideQuotes = false;
 
 
-    if (
-        !podium
+    for (
+        let i = 0;
+        i < line.length;
+        i++
     ) {
 
-        return;
+        const char =
+            line[i];
+
+
+        if (
+            char === '"'
+        ) {
+
+            insideQuotes =
+                !insideQuotes;
+
+        }
+
+        else if (
+            char === "," &&
+            !insideQuotes
+        ) {
+
+            result.push(
+                current
+            );
+
+            current = "";
+
+        }
+
+        else {
+
+            current += char;
+
+        }
 
     }
 
 
-    if (
-        players.length === 0
-    ) {
-
-        podium.innerHTML =
-            "";
-
-        return;
-
-    }
+    result.push(
+        current
+    );
 
 
-    const medals = [
-
-        "🥇",
-        "🥈",
-        "🥉"
-
-    ];
-
-
-    const places = [
-
-        "1ST PLACE",
-        "2ND PLACE",
-        "3RD PLACE"
-
-    ];
-
-
-    const topPlayers =
-        players.slice(
-            0,
-            3
-        );
-
-
-    podium.innerHTML =
-
-        topPlayers
-            .map(
-                function(
-                    player,
-                    index
-                ) {
-
-                    return `
-
-                        <div
-                            class="
-                                podium-card
-                                ${
-                                    index === 0
-                                        ? "first"
-                                        : ""
-                                }
-                            "
-                        >
-
-                            <div
-                                class="medal"
-                            >
-
-                                ${medals[index]}
-
-                            </div>
-
-
-                            <div>
-
-                                <div
-                                    class="
-                                        podium-place
-                                    "
-                                >
-
-                                    ${places[index]}
-
-                                </div>
-
-
-                                <div
-                                    class="
-                                        podium-ign
-                                    "
-                                >
-
-                                    ${escapeHTML(
-                                        player.ign
-                                    )}
-
-                                </div>
-
-
-                                <div
-                                    class="
-                                        podium-count
-                                    "
-                                >
-
-                                    ${
-                                        player.referrals
-                                    }
-
-                                    ${
-                                        player.referrals === 1
-                                            ? " referral"
-                                            : " referrals"
-                                    }
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    `;
-
-                }
-            )
-            .join("");
+    return result;
 
 }
 
 
 /* =========================================================
-   LEADERBOARD
+   DISPLAY STANDINGS
    ========================================================= */
 
-function renderLeaderboard(
+function displayStandings(
     players
 ) {
 
@@ -602,16 +343,7 @@ function renderLeaderboard(
 
 
     if (
-        !table
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        players.length === 0
+        !players.length
     ) {
 
         table.innerHTML = `
@@ -623,7 +355,7 @@ function renderLeaderboard(
                     class="loading"
                 >
 
-                    No participants yet.
+                    No players found.
 
                 </td>
 
@@ -639,14 +371,32 @@ function renderLeaderboard(
     table.innerHTML =
 
         players
+
             .map(
+
                 function(
                     player,
                     index
                 ) {
 
+
+                    /*
+                       Ranking is based on
+                       referral count.
+                    */
+
                     const rank =
                         index + 1;
+
+
+                    /*
+                       Get reward based
+                       on ranking.
+                    */
+
+                    const reward =
+                        rewards[rank] ||
+                        "No Reward";
 
 
                     return `
@@ -676,9 +426,7 @@ function renderLeaderboard(
 
 
                             <td
-                                class="
-                                    referrals
-                                "
+                                class="referrals"
                             >
 
                                 ${player.referrals}
@@ -690,7 +438,9 @@ function renderLeaderboard(
                                 class="reward"
                             >
 
-                                TBA
+                                ${escapeHTML(
+                                    reward
+                                )}
 
                             </td>
 
@@ -699,8 +449,171 @@ function renderLeaderboard(
                     `;
 
                 }
+
             )
+
             .join("");
+
+}
+
+
+/* =========================================================
+   TOP 3 PODIUM
+   ========================================================= */
+
+function updatePodium(
+    players
+) {
+
+    const podium =
+        document.getElementById(
+            "podium"
+        );
+
+
+    if (
+        !podium ||
+        !players.length
+    ) {
+
+        return;
+
+    }
+
+
+    const topPlayers =
+        players.slice(
+            0,
+            3
+        );
+
+
+    const medals = [
+
+        "🥇",
+
+        "🥈",
+
+        "🥉"
+
+    ];
+
+
+    podium.innerHTML =
+
+        topPlayers
+
+            .map(
+
+                function(
+                    player,
+                    index
+                ) {
+
+
+                    const rank =
+                        index + 1;
+
+
+                    return `
+
+                        <div
+                            class="podium-card
+                            ${
+                                rank === 1
+                                    ? "first"
+                                    : ""
+                            }"
+                        >
+
+                            <div>
+
+                                <div
+                                    class="medal"
+                                >
+
+                                    ${medals[index]}
+
+                                </div>
+
+
+                                <div
+                                    class="podium-place"
+                                >
+
+                                    ${rank === 1
+                                        ? "1ST PLACE"
+                                        : rank === 2
+                                        ? "2ND PLACE"
+                                        : "3RD PLACE"
+                                    }
+
+                                </div>
+
+
+                                <div
+                                    class="podium-ign"
+                                >
+
+                                    ${escapeHTML(
+                                        player.ign
+                                    )}
+
+                                </div>
+
+
+                                <div
+                                    class="podium-count"
+                                >
+
+                                    ${
+                                        player.referrals
+                                    }
+                                    Referrals
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+
+            )
+
+            .join("");
+
+}
+
+
+/* =========================================================
+   LAST UPDATED
+   ========================================================= */
+
+function updateLastUpdated() {
+
+    const element =
+        document.getElementById(
+            "lastUpdated"
+        );
+
+
+    if (!element) {
+
+        return;
+
+    }
+
+
+    const now =
+        new Date();
+
+
+    element.textContent =
+        "Last updated: " +
+        now.toLocaleString();
 
 }
 
@@ -709,44 +622,48 @@ function renderLeaderboard(
    COUNTDOWN
    ========================================================= */
 
+/*
+   Event deadline:
+   September 7, 2026
+
+   Change the time here if needed.
+*/
+
+const eventEnd =
+    new Date(
+        "September 7, 2026 23:59:59"
+    ).getTime();
+
+
 function updateCountdown() {
 
-    const countdown =
+    const element =
         document.getElementById(
             "countdown"
         );
 
 
-    if (
-        !countdown
-    ) {
+    if (!element) {
 
         return;
 
     }
 
 
-    const deadline =
-        new Date(
-            EVENT_DEADLINE
-        ).getTime();
-
-
     const now =
-        Date.now();
+        new Date().getTime();
 
 
-    const difference =
-        deadline -
-        now;
+    const distance =
+        eventEnd - now;
 
 
     if (
-        difference <= 0
+        distance <= 0
     ) {
 
-        countdown.textContent =
-            "EVENT CLOSED";
+        element.textContent =
+            "EVENT ENDED";
 
         return;
 
@@ -755,127 +672,98 @@ function updateCountdown() {
 
     const days =
         Math.floor(
-            difference /
-            86400000
+            distance /
+            (
+                1000 *
+                60 *
+                60 *
+                24
+            )
         );
 
 
     const hours =
         Math.floor(
             (
-                difference %
-                86400000
+                distance %
+                (
+                    1000 *
+                    60 *
+                    60 *
+                    24
+                )
             ) /
-            3600000
+            (
+                1000 *
+                60 *
+                60
+            )
         );
 
 
     const minutes =
         Math.floor(
             (
-                difference %
-                3600000
+                distance %
+                (
+                    1000 *
+                    60 *
+                    60
+                )
             ) /
-            60000
+            (
+                1000 *
+                60
+            )
         );
 
 
     const seconds =
         Math.floor(
             (
-                difference %
-                60000
+                distance %
+                (
+                    1000 *
+                    60
+                )
             ) /
             1000
         );
 
 
-    countdown.textContent =
+    element.textContent =
 
         `${days}D ` +
 
-        `${String(hours).padStart(
-            2,
-            "0"
-        )}:` +
+        `${String(hours).padStart(2, "0")}H ` +
 
-        `${String(minutes).padStart(
-            2,
-            "0"
-        )}:` +
+        `${String(minutes).padStart(2, "0")}M ` +
 
-        `${String(seconds).padStart(
-            2,
-            "0"
-        )}`;
+        `${String(seconds).padStart(2, "0")}S`;
 
 }
 
 
 /* =========================================================
-   HTML SECURITY
+   START
    ========================================================= */
 
-function escapeHTML(
-    value
-) {
-
-    return String(
-        value
-    )
-
-        .replace(
-            /[&<>"']/g,
-
-            function(
-                character
-            ) {
-
-                const replacements = {
-
-                    "&":
-                        "&amp;",
-
-                    "<":
-                        "&lt;",
-
-                    ">":
-                        "&gt;",
-
-                    '"':
-                        "&quot;",
-
-                    "'":
-                        "&#039;"
-
-                };
-
-
-                return replacements[
-                    character
-                ];
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   START WEBSITE
-   ========================================================= */
+loadStandings();
 
 
 /*
- * Start countdown.
- */
+   Refresh standings every 60 seconds.
+*/
 
-updateCountdown();
+setInterval(
+    loadStandings,
+    60000
+);
 
 
 /*
- * Update countdown every second.
- */
+   Update countdown every second.
+*/
 
 setInterval(
     updateCountdown,
@@ -883,18 +771,4 @@ setInterval(
 );
 
 
-/*
- * Load Google Sheet.
- */
-
-loadStandings();
-
-
-/*
- * Refresh standings every 5 minutes.
- */
-
-setInterval(
-    loadStandings,
-    5 * 60 * 1000
-);
+updateCountdown();
