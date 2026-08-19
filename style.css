@@ -1,42 +1,45 @@
 /* =========================================================
    CABAL SEA SAGA
-   REFERRAL EVENT 2026
    BLOOD RED / SILVER / GOLD
    ========================================================= */
 
+
+/* ==============================
+   VARIABLES
+   ============================== */
+
 :root {
 
-    --blood-red: #780808;
-    --bright-red: #A91616;
-    --dark-red: #350303;
-    --deep-red: #120101;
+    --red: #8b0000;
+    --dark-red: #3d0000;
+    --bright-red: #c41414;
 
-    --silver: #BFC0C2;
-    --light-silver: #EEEEEE;
-    --dark-silver: #777777;
+    --gold: #d4af37;
+    --bright-gold: #f1d56a;
 
-    --gold: #D4AF37;
-    --bright-gold: #F1D36A;
-    --dark-gold: #8B691B;
+    --silver: #c0c0c0;
+    --white: #eeeeee;
 
     --black: #050505;
+    --dark: #0d0808;
+    --panel: #171010;
 
-    --panel: #120D0D;
-    --panel-light: #1D1414;
 }
 
 
-/* =========================================================
+/* ==============================
    RESET
-   ========================================================= */
+   ============================== */
 
 * {
     box-sizing: border-box;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
+
 
 body {
 
@@ -44,89 +47,68 @@ body {
 
     min-height: 100vh;
 
-    color: var(--light-silver);
+    color: var(--white);
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 
     background:
-
         radial-gradient(
-            ellipse at top,
-            #4A0707 0%,
-            #250303 25%,
-            #100707 55%,
+            circle at top,
+            #4b0707 0%,
+            #230303 30%,
+            #0c0606 65%,
             #050505 100%
         );
 
-    background-attachment: fixed;
 }
 
 
-/* =========================================================
-   HERO
-   ========================================================= */
+/* ==============================
+   HEADER
+   ============================== */
 
 .hero {
 
     text-align: center;
 
     padding:
-        45px 20px 30px;
+        45px 20px 35px;
+
 }
 
-.hero-content {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-}
-
-
-/* =========================================================
-   LOGO
-   ========================================================= */
 
 .server-logo {
 
-    width: 140px;
+    display: block;
 
-    height: 140px;
+    width: 150px;
+
+    height: 150px;
 
     object-fit: contain;
 
-    display: block;
-
     margin:
-        0 auto 16px;
+        0 auto 15px;
 
     filter:
         drop-shadow(
-            0 0 18px
+            0 0 20px
             rgba(
                 212,
                 175,
                 55,
-                0.4
+                0.5
             )
         );
+
 }
 
-
-/* =========================================================
-   SERVER NAME
-   ========================================================= */
 
 .hero h1 {
 
     margin: 0;
 
-    color:
-        var(--light-silver);
+    color: var(--white);
 
     font-size:
         clamp(
@@ -139,289 +121,194 @@ body {
 
     letter-spacing: 3px;
 
-    text-transform: uppercase;
-
     text-shadow:
+        0 3px 10px #000;
 
-        0 2px 0 #000,
-
-        0 0 15px
-        rgba(
-            122,
-            12,
-            12,
-            0.9
-        );
 }
 
-
-/* =========================================================
-   EVENT TITLE
-   ========================================================= */
 
 .event-title {
 
     margin:
-        9px 0 0;
+        10px 0 0;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
-    font-size:
-        16px;
+    font-size: 16px;
 
-    font-weight:
-        700;
+    font-weight: bold;
 
-    letter-spacing:
-        4px;
+    letter-spacing: 4px;
+
 }
 
 
-/* =========================================================
-   HERO DIVIDER
-   ========================================================= */
-
-.hero::after {
-
-    content: "";
-
-    display: block;
-
-    width: 220px;
-
-    height: 2px;
-
-    margin:
-        25px auto 0;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--gold),
-            transparent
-        );
-}
-
-
-/* =========================================================
+/* ==============================
    CONTAINER
-   ========================================================= */
+   ============================== */
 
 .container {
 
-    width:
-        min(
-            1100px,
-            92%
-        );
+    width: 92%;
 
-    margin:
-        0 auto;
+    max-width: 1100px;
+
+    margin: auto;
+
 }
 
 
-/* =========================================================
+/* ==============================
    COUNTDOWN
-   ========================================================= */
+   ============================== */
 
 .countdown-box {
 
+    padding: 30px;
+
     text-align: center;
 
-    padding:
-        28px 20px;
-
-    margin-bottom:
-        40px;
+    margin-bottom: 40px;
 
     background:
-
         linear-gradient(
             145deg,
-            #2A0505,
-            #0E0505
+            #310505,
+            #100505
         );
 
     border:
-        1px solid #552020;
+        1px solid #612020;
 
     border-top:
-        2px solid var(--gold);
+        3px solid var(--gold);
 
     border-bottom:
-        2px solid var(--blood-red);
+        3px solid var(--red);
 
     box-shadow:
-        0 12px 35px
-        rgba(
-            0,
-            0,
-            0,
-            0.65
-        );
+        0 10px 30px rgba(0,0,0,.6);
+
 }
+
 
 .countdown-label {
 
-    color:
-        var(--silver);
+    color: var(--silver);
 
-    font-size:
-        12px;
+    font-size: 12px;
 
-    font-weight:
-        700;
+    font-weight: bold;
 
-    letter-spacing:
-        3px;
+    letter-spacing: 3px;
+
 }
+
 
 #countdown {
 
-    margin-top:
-        10px;
+    margin-top: 10px;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
     font-size:
         clamp(
-            32px,
+            30px,
             6vw,
-            52px
+            50px
         );
 
-    font-weight:
-        900;
+    font-weight: 900;
 
-    letter-spacing:
-        3px;
 }
+
 
 #lastUpdated {
 
-    margin-top:
-        12px;
+    margin-top: 10px;
 
-    color:
-        var(--dark-silver);
+    color: #777;
 
-    font-size:
-        11px;
+    font-size: 11px;
+
 }
 
 
-/* =========================================================
-   SECTION TITLES
-   ========================================================= */
+/* ==============================
+   SECTION TITLE
+   ============================== */
 
 .section-title {
 
     margin:
         40px 0 20px;
 
-    padding-left:
-        14px;
+    padding:
+        12px 15px;
+
+    color: var(--white);
+
+    font-size: 23px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(139,0,0,.35),
+            transparent
+        );
 
     border-left:
-        5px solid
-        var(--blood-red);
+        5px solid var(--red);
 
-    color:
-        var(--light-silver);
-
-    font-size:
-        24px;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        2px;
 }
 
 
-/* =========================================================
+/* ==============================
    PODIUM
-   ========================================================= */
+   ============================== */
 
 #podium {
 
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
+        repeat(3, 1fr);
 
-    gap:
-        15px;
+    gap: 15px;
+
 }
+
 
 .podium-card {
 
-    min-height:
-        155px;
+    min-height: 150px;
 
-    display:
-        flex;
+    padding: 25px;
 
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    gap:
-        15px;
-
-    padding:
-        25px 15px;
-
-    text-align:
-        center;
+    text-align: center;
 
     background:
-
         linear-gradient(
             145deg,
-            #211919,
-            #0C0A0A
+            #211818,
+            #0c0909
         );
 
     border:
         1px solid #555;
 
     border-top:
-        3px solid
-        var(--silver);
+        3px solid var(--silver);
 
     box-shadow:
-        0 8px 25px
-        rgba(
-            0,
-            0,
-            0,
-            0.5
-        );
+        0 8px 25px rgba(0,0,0,.5);
 
-    transition:
-        transform 0.2s ease;
 }
 
-.podium-card:hover {
-
-    transform:
-        translateY(-4px);
-
-    border-top-color:
-        var(--gold);
-}
 
 .podium-card.first {
 
@@ -429,235 +316,166 @@ body {
         var(--gold);
 
     background:
-
         linear-gradient(
             145deg,
-            #302508,
-            #110D05
+            #302505,
+            #100c04
         );
+
 }
+
 
 .medal {
 
-    font-size:
-        42px;
+    font-size: 38px;
+
 }
+
 
 .podium-place {
 
-    color:
-        var(--silver);
+    color: var(--silver);
 
-    font-size:
-        11px;
+    font-size: 11px;
 
-    font-weight:
-        800;
+    font-weight: bold;
 
-    letter-spacing:
-        2px;
+    letter-spacing: 2px;
+
 }
 
-.podium-card.first
-.podium-place {
-
-    color:
-        var(--gold);
-}
 
 .podium-ign {
 
-    margin-top:
-        7px;
+    margin-top: 8px;
 
-    color:
-        var(--light-silver);
+    color: var(--white);
 
-    font-size:
-        20px;
+    font-size: 20px;
 
-    font-weight:
-        900;
+    font-weight: 900;
+
 }
+
 
 .podium-count {
 
-    margin-top:
-        7px;
+    margin-top: 8px;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
-    font-size:
-        13px;
 }
 
 
-/* =========================================================
+/* ==============================
    LEADERBOARD
-   ========================================================= */
+   ============================== */
 
 .leaderboard {
 
-    overflow:
-        hidden;
+    overflow-x: auto;
 
     background:
-        rgba(
-            15,
-            10,
-            10,
-            0.97
-        );
+        #0d0909;
 
     border:
-        1px solid #3D3030;
+        1px solid #3c2929;
 
     box-shadow:
-        0 15px 40px
-        rgba(
-            0,
-            0,
-            0,
-            0.6
-        );
+        0 10px 30px rgba(0,0,0,.5);
+
 }
 
-.table-wrapper {
-
-    width:
-        100%;
-
-    overflow-x:
-        auto;
-}
 
 table {
 
-    width:
-        100%;
+    width: 100%;
 
-    border-collapse:
-        collapse;
+    border-collapse: collapse;
+
 }
+
 
 thead {
 
     background:
-
         linear-gradient(
             90deg,
-            var(--dark-red),
+            #4a0505,
             #210303
         );
+
 }
+
 
 th {
 
-    padding:
-        16px;
+    padding: 16px;
 
-    color:
-        var(--silver);
+    color: var(--silver);
 
-    font-size:
-        12px;
+    text-align: left;
 
-    font-weight:
-        800;
+    font-size: 12px;
 
-    letter-spacing:
-        2px;
+    letter-spacing: 2px;
 
-    text-align:
-        left;
-
-    border-bottom:
-        1px solid
-        var(--blood-red);
 }
+
 
 td {
 
-    padding:
-        15px 16px;
-
-    color:
-        var(--light-silver);
+    padding: 15px;
 
     border-bottom:
-        1px solid #2B2222;
+        1px solid #2c2020;
+
 }
+
 
 tbody tr:hover {
 
     background:
-        rgba(
-            122,
-            12,
-            12,
-            0.20
-        );
+        rgba(139,0,0,.2);
+
 }
+
 
 td.rank {
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
-    font-weight:
-        900;
+    font-weight: 900;
+
 }
+
 
 td.referrals {
 
-    color:
-        var(--silver);
+    color: var(--silver);
 
-    font-weight:
-        800;
+    font-weight: bold;
+
 }
+
 
 td.reward {
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
-    font-weight:
-        700;
+    font-weight: bold;
+
 }
 
-tbody tr:nth-child(1) {
-
-    border-left:
-        3px solid
-        var(--gold);
-}
-
-tbody tr:nth-child(2) {
-
-    border-left:
-        3px solid
-        var(--silver);
-}
-
-tbody tr:nth-child(3) {
-
-    border-left:
-        3px solid
-        #A97142;
-}
 
 .loading {
 
-    padding:
-        35px;
+    text-align: center;
 
-    text-align:
-        center;
+    color: var(--silver);
 
-    color:
-        var(--silver);
+    padding: 35px;
+
 }
 
 
@@ -665,66 +483,65 @@ tbody tr:nth-child(3) {
    GUIDELINES
    ========================================================= */
 
+
+/*
+   THIS IS THE BOXED GUIDELINE DESIGN
+*/
+
 .guidelines {
 
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
-        repeat(
-            2,
-            1fr
-        );
+        repeat(2, 1fr);
 
-    gap:
-        15px;
+    gap: 18px;
+
+    margin-bottom: 45px;
+
 }
 
 
-/* Guideline box */
+/* Individual box */
 
 .guideline-card {
 
-    position: relative;
+    display: flex;
 
-    display:
-        flex;
+    align-items: flex-start;
 
-    gap:
-        18px;
+    gap: 18px;
 
-    padding:
-        22px;
+    min-height: 150px;
+
+    padding: 22px;
 
     background:
-
         linear-gradient(
             145deg,
-            #1D1414,
-            #0C0909
+            #211616,
+            #0d0808
         );
 
     border:
-        1px solid
-        #3D3030;
+        1px solid #4b3030;
 
     border-left:
-        3px solid
-        var(--blood-red);
+        4px solid var(--red);
 
     box-shadow:
-
-        0 8px 25px
+        0 10px 25px
         rgba(
             0,
             0,
             0,
-            0.45
+            .5
         );
 
     transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
+        transform .2s ease,
+        border-color .2s ease;
+
 }
 
 
@@ -733,7 +550,7 @@ tbody tr:nth-child(3) {
 .guideline-card:hover {
 
     transform:
-        translateY(-3px);
+        translateY(-4px);
 
     border-left-color:
         var(--gold);
@@ -741,324 +558,186 @@ tbody tr:nth-child(3) {
 }
 
 
-/* Warning card */
+/* Violation box */
 
-.guideline-card.warning {
+.guideline-card.violation {
 
-    border-left-color:
-        var(--bright-red);
+    border:
+        1px solid #672020;
+
+    border-left:
+        4px solid var(--bright-red);
 
     background:
-
         linear-gradient(
             145deg,
-            #260909,
-            #0D0505
+            #2a0909,
+            #100505
         );
+
 }
 
 
-/* Number */
+/* Number square */
 
 .guideline-number {
 
     flex-shrink: 0;
 
-    width:
-        42px;
+    width: 48px;
 
-    height:
-        42px;
+    height: 48px;
 
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        center;
+    align-items: center;
 
-    justify-content:
-        center;
+    justify-content: center;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
     background:
-        #100606;
+        #0b0606;
 
     border:
-        1px solid
-        var(--dark-gold);
+        1px solid var(--gold);
 
-    font-size:
-        13px;
+    font-size: 13px;
 
-    font-weight:
-        900;
+    font-weight: 900;
 
 }
 
 
-/* Guideline content */
+/* Content */
 
 .guideline-content {
 
-    flex:
-        1;
+    flex: 1;
+
 }
 
-
-/* Guideline title */
 
 .guideline-content h3 {
 
     margin:
-        0 0 8px;
+        0 0 10px;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
-    font-size:
-        16px;
+    font-size: 16px;
 
-    font-weight:
-        800;
+    font-weight: 900;
 
-    text-transform:
-        uppercase;
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
 
 }
 
-
-/* Guideline text */
 
 .guideline-content p {
 
-    margin:
-        0;
+    margin: 0;
 
-    color:
-        var(--silver);
+    color: var(--silver);
 
-    font-size:
-        14px;
+    font-size: 14px;
 
-    line-height:
-        1.65;
+    line-height: 1.7;
+
 }
 
-
-/* Strong text */
 
 .guideline-content strong {
 
-    color:
-        var(--light-silver);
+    color: var(--white);
+
 }
 
 
-/* =========================================================
-   SUMMARY
-   ========================================================= */
-
-.summary-grid {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
-
-    gap:
-        15px;
-
-    margin-bottom:
-        45px;
-}
-
-.summary-card {
-
-    padding:
-        25px 15px;
-
-    text-align:
-        center;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #211919,
-            #0C0A0A
-        );
-
-    border:
-        1px solid
-        #3D3030;
-
-    border-top:
-        2px solid
-        var(--gold);
-}
-
-.summary-card span {
-
-    display:
-        block;
-
-    margin-bottom:
-        8px;
-
-    color:
-        var(--dark-silver);
-
-    font-size:
-        10px;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        2px;
-}
-
-.summary-card strong {
-
-    color:
-        var(--gold);
-
-    font-size:
-        16px;
-}
-
-
-/* =========================================================
+/* ==============================
    FOOTER
-   ========================================================= */
+   ============================== */
 
 footer {
 
-    margin-top:
-        50px;
+    margin-top: 50px;
 
-    padding:
-        40px 20px;
+    padding: 40px 20px;
 
-    text-align:
-        center;
+    text-align: center;
+
+    color: #666;
+
+    font-size: 12px;
 
     border-top:
-        1px solid
-        #302020;
+        1px solid #302020;
 
-    color:
-        var(--dark-silver);
-
-    font-size:
-        12px;
-}
-
-.footer-title {
-
-    margin-bottom:
-        5px;
-
-    color:
-        var(--silver);
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        2px;
 }
 
 
-/* =========================================================
+footer strong {
+
+    color: var(--silver);
+
+    letter-spacing: 2px;
+
+}
+
+
+/* ==============================
    MOBILE
-   ========================================================= */
+   ============================== */
 
 @media (max-width: 700px) {
 
-    .container {
-
-        width:
-            94%;
-    }
-
-    .hero {
-
-        padding:
-            30px 10px;
-    }
-
     .server-logo {
 
-        width:
-            110px;
+        width: 110px;
 
-        height:
-            110px;
+        height: 110px;
+
     }
+
 
     .hero h1 {
 
-        font-size:
-            30px;
+        font-size: 30px;
 
-        letter-spacing:
-            2px;
     }
+
 
     .event-title {
 
-        font-size:
-            12px;
+        font-size: 11px;
 
-        letter-spacing:
-            2px;
+        letter-spacing: 2px;
+
     }
 
-    .hero::after {
-
-        width:
-            160px;
-    }
-
-    #countdown {
-
-        font-size:
-            30px;
-
-        letter-spacing:
-            1px;
-    }
 
     #podium {
 
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
+
     }
 
-    .podium-card {
-
-        min-height:
-            120px;
-    }
 
     .guidelines {
 
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
+
     }
 
-    .summary-grid {
 
-        grid-template-columns:
-            1fr;
+    .guideline-card {
+
+        min-height: 0;
+
     }
+
 
     th,
     td {
@@ -1066,53 +745,8 @@ footer {
         padding:
             11px 8px;
 
-        font-size:
-            12px;
-    }
+        font-size: 12px;
 
-    th {
-
-        font-size:
-            9px;
-
-        letter-spacing:
-            1px;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 400px) {
-
-    .server-logo {
-
-        width:
-            95px;
-
-        height:
-            95px;
-    }
-
-    .hero h1 {
-
-        font-size:
-            25px;
-    }
-
-    #countdown {
-
-        font-size:
-            24px;
-    }
-
-    .guideline-card {
-
-        padding:
-            18px;
     }
 
 }
