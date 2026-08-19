@@ -1,0 +1,940 @@
+/* =========================================================
+   CABAL SEA SAGA - REFERRAL EVENT
+   Main Website Styling
+   ========================================================= */
+
+
+/* -------------------------
+   VARIABLES
+------------------------- */
+
+:root {
+
+    --background: #06080c;
+
+    --background-light: #0d1118;
+
+    --panel: rgba(15, 19, 27, 0.94);
+
+    --panel-light: rgba(24, 29, 39, 0.94);
+
+    --gold: #c99b45;
+
+    --gold-light: #f0cf82;
+
+    --gold-dark: #795c27;
+
+    --text: #f2f3f5;
+
+    --muted: #969eab;
+
+    --border: rgba(201, 155, 69, 0.28);
+
+    --danger: #c96060;
+
+    --shadow:
+        0 20px 60px rgba(0, 0, 0, 0.45);
+
+}
+
+
+/* -------------------------
+   RESET
+------------------------- */
+
+* {
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    color: var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(201, 155, 69, 0.16),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 0% 50%,
+            rgba(50, 75, 110, 0.12),
+            transparent 35%
+        ),
+
+        var(--background);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.6;
+
+}
+
+
+/* -------------------------
+   BACKGROUND
+------------------------- */
+
+.background-grid {
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.35;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,0.018) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.018) 1px,
+            transparent 1px
+        );
+
+    background-size: 50px 50px;
+
+}
+
+
+.glow {
+
+    position: fixed;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    filter: blur(120px);
+
+    opacity: 0.08;
+
+    pointer-events: none;
+
+}
+
+
+.glow-one {
+
+    top: 100px;
+
+    left: -200px;
+
+    background: #d1a449;
+
+}
+
+
+.glow-two {
+
+    right: -200px;
+
+    top: 600px;
+
+    background: #3c679b;
+
+}
+
+
+/* -------------------------
+   HERO
+------------------------- */
+
+.hero {
+
+    min-height: 550px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    border-bottom: 1px solid var(--border);
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            transparent,
+            var(--background)
+        );
+
+}
+
+
+.hero-content {
+
+    width: min(1100px, 92%);
+
+    padding: 80px 0 70px;
+
+}
+
+
+.server-name {
+
+    font-size: 19px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.18em;
+
+    color: var(--gold-light);
+
+}
+
+
+.server-name span {
+
+    color: white;
+
+    font-weight: 400;
+
+}
+
+
+.event-badge {
+
+    display: inline-block;
+
+    margin-top: 30px;
+
+    padding: 7px 15px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    color: var(--gold-light);
+
+    background: rgba(201,155,69,0.06);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.2em;
+
+}
+
+
+h1 {
+
+    margin-top: 20px;
+
+    font-size: clamp(
+        42px,
+        7vw,
+        80px
+    );
+
+    line-height: 1;
+
+    letter-spacing: -0.04em;
+
+}
+
+
+h1 span {
+
+    display: block;
+
+    color: var(--gold-light);
+
+}
+
+
+.subtitle {
+
+    margin-top: 15px;
+
+    color: var(--muted);
+
+    font-size: 17px;
+
+}
+
+
+.deadline-box {
+
+    width: min(720px, 100%);
+
+    margin: 35px auto 0;
+
+    padding: 21px 25px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 25px;
+
+    text-align: left;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+.deadline-info small {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 0.18em;
+
+}
+
+
+.deadline-info strong {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--gold-light);
+
+    letter-spacing: 0.08em;
+
+}
+
+
+.countdown {
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    font-variant-numeric: tabular-nums;
+
+    white-space: nowrap;
+
+}
+
+
+/* -------------------------
+   MAIN
+------------------------- */
+
+main {
+
+    width: min(
+        1100px,
+        92%
+    );
+
+    margin: auto;
+
+}
+
+
+.section {
+
+    padding-top: 75px;
+
+}
+
+
+.section-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.section-label {
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.2em;
+
+}
+
+
+h2 {
+
+    margin-top: 4px;
+
+    font-size: 34px;
+
+    letter-spacing: -0.025em;
+
+}
+
+
+.last-updated {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+.last-updated strong {
+
+    color: var(--gold-light);
+
+}
+
+
+/* -------------------------
+   PODIUM
+------------------------- */
+
+.podium {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    align-items: end;
+
+    margin-bottom: 18px;
+
+}
+
+
+.podium-card {
+
+    padding: 27px 18px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(201,155,69,0.09),
+            var(--panel)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+.podium-card.first {
+
+    transform: translateY(-15px);
+
+}
+
+
+.medal {
+
+    font-size: 31px;
+
+}
+
+
+.podium-place {
+
+    margin-top: 4px;
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.15em;
+
+}
+
+
+.podium-ign {
+
+    margin-top: 5px;
+
+    font-size: 21px;
+
+    font-weight: 900;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+.podium-count {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+/* -------------------------
+   TABLE
+------------------------- */
+
+.table-container {
+
+    overflow-x: auto;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+table {
+
+    width: 100%;
+
+    min-width: 650px;
+
+    border-collapse: collapse;
+
+}
+
+
+th,
+td {
+
+    padding: 17px 19px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.05);
+
+}
+
+
+th {
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    letter-spacing: 0.16em;
+
+}
+
+
+td {
+
+    font-size: 14px;
+
+}
+
+
+tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+tbody tr:hover {
+
+    background:
+        rgba(255,255,255,0.025);
+
+}
+
+
+.rank {
+
+    color: var(--gold-light);
+
+    font-weight: 900;
+
+}
+
+
+.referrals {
+
+    font-weight: 900;
+
+}
+
+
+.reward {
+
+    color: var(--muted);
+
+}
+
+
+.table-note {
+
+    margin-top: 12px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+/* -------------------------
+   INFO CARDS
+------------------------- */
+
+.information-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+
+}
+
+
+.info-card {
+
+    padding: 25px;
+
+    background: var(--panel);
+
+    border: 1px solid
+        rgba(255,255,255,0.08);
+
+    border-radius: 12px;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+.card-number {
+
+    color: var(--gold);
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.15em;
+
+}
+
+
+.info-card h3 {
+
+    margin-top: 8px;
+
+    font-size: 17px;
+
+}
+
+
+.info-card p {
+
+    margin-top: 8px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+/* -------------------------
+   GUIDELINES
+------------------------- */
+
+.guidelines-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+
+}
+
+
+.guideline {
+
+    padding: 25px;
+
+    background: var(--panel);
+
+    border: 1px solid
+        rgba(255,255,255,0.08);
+
+    border-left:
+        2px solid
+        var(--border);
+
+    border-radius: 12px;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+.guideline h3 {
+
+    margin-bottom: 10px;
+
+    font-size: 17px;
+
+}
+
+
+.guideline ul {
+
+    padding-left: 18px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.guideline li {
+
+    margin: 7px 0;
+
+}
+
+
+.guideline strong {
+
+    color: var(--gold-light);
+
+}
+
+
+.guideline.warning {
+
+    border-left-color:
+        var(--danger);
+
+}
+
+
+.guideline.warning strong {
+
+    color: #e99b9b;
+
+}
+
+
+/* -------------------------
+   FOOTER
+------------------------- */
+
+footer {
+
+    margin-top: 90px;
+
+    padding: 35px 20px;
+
+    text-align: center;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+.footer-server {
+
+    color: var(--gold-light);
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.15em;
+
+}
+
+
+.footer-server span {
+
+    color: white;
+
+    font-weight: 400;
+
+}
+
+
+.footer-small {
+
+    margin-top: 4px;
+
+    opacity: 0.65;
+
+}
+
+
+/* -------------------------
+   MOBILE
+------------------------- */
+
+@media (max-width: 760px) {
+
+    .hero {
+
+        min-height: 500px;
+
+    }
+
+
+    .deadline-box {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .countdown {
+
+        font-size: 18px;
+
+    }
+
+
+    .section-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .podium {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .podium-card.first {
+
+        transform: none;
+
+    }
+
+
+    .podium-card {
+
+        display: grid;
+
+        grid-template-columns:
+            auto 1fr auto;
+
+        align-items: center;
+
+        gap: 12px;
+
+        text-align: left;
+
+    }
+
+
+    .information-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .guidelines-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .section {
+
+        padding-top: 55px;
+
+    }
+
+
+    h2 {
+
+        font-size: 28px;
+
+    }
+
+}
