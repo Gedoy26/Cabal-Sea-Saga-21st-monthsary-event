@@ -1,31 +1,33 @@
 /* =========================================================
    CABAL SEA SAGA
    REFERRAL EVENT 2026
-   BLOOD RED / SILVER / GOLD THEME
+   BLOOD RED / SILVER / GOLD
    ========================================================= */
 
 
 /* =========================================================
-   COLOR PALETTE
+   VARIABLES
    ========================================================= */
 
 :root {
 
     --blood-red: #7A0C0C;
+    --bright-red: #A91616;
     --dark-red: #3A0505;
-    --deep-red: #1A0202;
+    --deep-red: #160202;
 
-    --silver: #C0C0C0;
-    --light-silver: #E5E5E5;
+    --silver: #BFC3C7;
+    --light-silver: #F0F0F0;
     --dark-silver: #777777;
 
     --gold: #D4AF37;
-    --dark-gold: #8F6B1F;
+    --bright-gold: #F2D56B;
+    --dark-gold: #8D6C1F;
 
-    --black: #080808;
+    --black: #050505;
 
-    --panel: #120D0D;
-    --panel-light: #1C1414;
+    --panel: #100C0C;
+    --panel-light: #1B1313;
 
 }
 
@@ -50,15 +52,6 @@ body {
 
     min-height: 100vh;
 
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #3A0505 0%,
-            #180404 30%,
-            #0B0808 65%,
-            #050505 100%
-        );
-
     color: var(--light-silver);
 
     font-family:
@@ -66,42 +59,52 @@ body {
         Helvetica,
         sans-serif;
 
-}
+    background:
 
+        radial-gradient(
+            ellipse at top,
+            #4A0707 0%,
+            #250303 22%,
+            #100707 55%,
+            #050505 100%
+        );
 
-/* =========================================================
-   MAIN CONTAINER
-   ========================================================= */
-
-.container {
-
-    width: min(
-        1100px,
-        92%
-    );
-
-    margin: 0 auto;
+    background-attachment: fixed;
 
 }
 
 
 /* =========================================================
-   HERO / TOP HEADER
+   HERO
    ========================================================= */
 
 .hero {
 
+    width: 100%;
+
     text-align: center;
 
     padding:
-        45px 20px
-        30px;
+        45px 20px 30px;
+
+}
+
+
+/* Keep everything centered */
+
+.hero-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
 
 }
 
 
 /* =========================================================
-   SERVER LOGO
+   LOGO
    ========================================================= */
 
 .server-logo {
@@ -115,11 +118,15 @@ body {
     display: block;
 
     margin:
-        0 auto 15px auto;
+        0 auto 16px;
+
+    /*
+       Gold glow around the logo
+    */
 
     filter:
         drop-shadow(
-            0 0 15px
+            0 0 18px
             rgba(
                 212,
                 175,
@@ -149,14 +156,11 @@ body {
             52px
         );
 
-    font-weight:
-        900;
+    font-weight: 900;
 
-    letter-spacing:
-        3px;
+    letter-spacing: 3px;
 
-    text-transform:
-        uppercase;
+    text-transform: uppercase;
 
     text-shadow:
 
@@ -177,10 +181,10 @@ body {
    EVENT TITLE
    ========================================================= */
 
-.hero p {
+.event-title {
 
     margin:
-        8px 0 0;
+        9px 0 0;
 
     color:
         var(--gold);
@@ -194,14 +198,11 @@ body {
     letter-spacing:
         4px;
 
-    text-transform:
-        uppercase;
-
 }
 
 
 /* =========================================================
-   GOLD HEADER DIVIDER
+   HERO DIVIDER
    ========================================================= */
 
 .hero::after {
@@ -218,6 +219,7 @@ body {
         25px auto 0;
 
     background:
+
         linear-gradient(
             90deg,
             transparent,
@@ -226,13 +228,32 @@ body {
         );
 
     box-shadow:
-        0 0 8px
+
+        0 0 10px
         rgba(
             212,
             175,
             55,
-            0.3
+            0.35
         );
+
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.container {
+
+    width:
+        min(
+            1100px,
+            92%
+        );
+
+    margin:
+        0 auto;
 
 }
 
@@ -243,11 +264,22 @@ body {
 
 .countdown-box {
 
+    position: relative;
+
+    text-align: center;
+
+    padding:
+        28px 20px;
+
+    margin-bottom:
+        40px;
+
     background:
+
         linear-gradient(
             145deg,
             #2A0505,
-            #100505
+            #0E0505
         );
 
     border:
@@ -262,16 +294,8 @@ body {
         2px solid
         var(--blood-red);
 
-    padding:
-        25px;
-
-    margin-bottom:
-        35px;
-
-    text-align:
-        center;
-
     box-shadow:
+
         0 12px 35px
         rgba(
             0,
@@ -283,7 +307,7 @@ body {
 }
 
 
-/* COUNTDOWN LABEL */
+/* Countdown label */
 
 .countdown-label {
 
@@ -299,18 +323,15 @@ body {
     letter-spacing:
         3px;
 
-    text-transform:
-        uppercase;
-
 }
 
 
-/* COUNTDOWN TIMER */
+/* Countdown */
 
 #countdown {
 
     margin-top:
-        8px;
+        10px;
 
     color:
         var(--gold);
@@ -329,28 +350,45 @@ body {
         3px;
 
     text-shadow:
+
         0 0 15px
         rgba(
             212,
             175,
             55,
-            0.4
+            0.45
         );
 
 }
 
 
+/* Last updated */
+
+#lastUpdated {
+
+    margin-top:
+        12px;
+
+    color:
+        var(--dark-silver);
+
+    font-size:
+        11px;
+
+}
+
+
 /* =========================================================
-   SECTION TITLE
+   SECTION TITLES
    ========================================================= */
 
 .section-title {
 
     margin:
-        35px 0 20px;
+        40px 0 20px;
 
     padding-left:
-        12px;
+        14px;
 
     border-left:
         5px solid
@@ -367,9 +405,6 @@ body {
 
     letter-spacing:
         2px;
-
-    text-transform:
-        uppercase;
 
 }
 
@@ -395,9 +430,12 @@ body {
 }
 
 
-/* PODIUM CARD */
+/* Podium card */
 
 .podium-card {
+
+    min-height:
+        155px;
 
     display:
         flex;
@@ -411,9 +449,6 @@ body {
     gap:
         15px;
 
-    min-height:
-        150px;
-
     padding:
         25px 15px;
 
@@ -421,9 +456,10 @@ body {
         center;
 
     background:
+
         linear-gradient(
             145deg,
-            #201919,
+            #211919,
             #0C0A0A
         );
 
@@ -436,6 +472,7 @@ body {
         var(--silver);
 
     box-shadow:
+
         0 8px 25px
         rgba(
             0,
@@ -451,12 +488,12 @@ body {
 }
 
 
-/* HOVER */
+/* Hover */
 
 .podium-card:hover {
 
     transform:
-        translateY(-3px);
+        translateY(-4px);
 
     border-top-color:
         var(--gold);
@@ -464,7 +501,7 @@ body {
 }
 
 
-/* FIRST PLACE */
+/* First place */
 
 .podium-card.first {
 
@@ -472,13 +509,15 @@ body {
         var(--gold);
 
     background:
+
         linear-gradient(
             145deg,
-            #2B2108,
-            #100D06
+            #302508,
+            #110D05
         );
 
     box-shadow:
+
         0 0 30px
         rgba(
             212,
@@ -490,7 +529,7 @@ body {
 }
 
 
-/* MEDAL */
+/* Medal */
 
 .medal {
 
@@ -503,7 +542,7 @@ body {
 }
 
 
-/* PODIUM POSITION */
+/* Place */
 
 .podium-place {
 
@@ -531,7 +570,7 @@ body {
 }
 
 
-/* PODIUM IGN */
+/* IGN */
 
 .podium-ign {
 
@@ -550,7 +589,7 @@ body {
 }
 
 
-/* PODIUM REFERRALS */
+/* Referral count */
 
 .podium-count {
 
@@ -562,9 +601,6 @@ body {
 
     font-size:
         13px;
-
-    font-weight:
-        600;
 
 }
 
@@ -583,7 +619,7 @@ body {
             15,
             10,
             10,
-            0.96
+            0.97
         );
 
     border:
@@ -591,6 +627,7 @@ body {
         #3D3030;
 
     box-shadow:
+
         0 15px 40px
         rgba(
             0,
@@ -598,6 +635,15 @@ body {
             0,
             0.6
         );
+
+}
+
+
+.table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
 
 }
 
@@ -617,11 +663,10 @@ table {
 }
 
 
-/* TABLE HEADER */
-
 thead {
 
     background:
+
         linear-gradient(
             90deg,
             var(--dark-red),
@@ -661,8 +706,6 @@ th {
 }
 
 
-/* TABLE CELLS */
-
 td {
 
     padding:
@@ -677,8 +720,6 @@ td {
 
 }
 
-
-/* TABLE ROW */
 
 tbody tr {
 
@@ -695,15 +736,13 @@ tbody tr:hover {
             122,
             12,
             12,
-            0.18
+            0.20
         );
 
 }
 
 
-/* =========================================================
-   RANK
-   ========================================================= */
+/* Rank */
 
 td.rank {
 
@@ -719,9 +758,7 @@ td.rank {
 }
 
 
-/* =========================================================
-   REFERRALS
-   ========================================================= */
+/* Referrals */
 
 td.referrals {
 
@@ -734,9 +771,7 @@ td.referrals {
 }
 
 
-/* =========================================================
-   REWARD
-   ========================================================= */
+/* Reward */
 
 td.reward {
 
@@ -749,9 +784,7 @@ td.reward {
 }
 
 
-/* =========================================================
-   TOP THREE TABLE ACCENTS
-   ========================================================= */
+/* Top 3 */
 
 tbody tr:nth-child(1) {
 
@@ -781,6 +814,156 @@ tbody tr:nth-child(3) {
 
 
 /* =========================================================
+   EVENT INFORMATION
+   ========================================================= */
+
+.event-info {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
+
+    gap:
+        15px;
+
+    margin-bottom:
+        45px;
+
+}
+
+
+/* Card */
+
+.info-card {
+
+    padding:
+        22px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #1C1414,
+            #0C0909
+        );
+
+    border:
+        1px solid
+        #3D3030;
+
+    border-left:
+        3px solid
+        var(--blood-red);
+
+    box-shadow:
+
+        0 8px 25px
+        rgba(
+            0,
+            0,
+            0,
+            0.4
+        );
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.info-card:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-left-color:
+        var(--gold);
+
+}
+
+
+/* Icon / label */
+
+.info-icon {
+
+    display:
+        inline-block;
+
+    margin-bottom:
+        12px;
+
+    padding:
+        4px 8px;
+
+    color:
+        var(--dark-red);
+
+    background:
+        var(--gold);
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        1px;
+
+}
+
+
+/* Card title */
+
+.info-card h3 {
+
+    margin:
+        0 0 9px;
+
+    color:
+        var(--gold);
+
+    font-size:
+        14px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        1px;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* Card text */
+
+.info-card p {
+
+    margin:
+        0;
+
+    color:
+        var(--silver);
+
+    font-size:
+        14px;
+
+    line-height:
+        1.6;
+
+}
+
+
+/* =========================================================
    LOADING
    ========================================================= */
 
@@ -799,76 +982,6 @@ tbody tr:nth-child(3) {
 
 
 /* =========================================================
-   LAST UPDATED
-   ========================================================= */
-
-#lastUpdated {
-
-    margin-top:
-        8px;
-
-    color:
-        var(--dark-silver);
-
-    font-size:
-        11px;
-
-    text-align:
-        right;
-
-}
-
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-button {
-
-    padding:
-        10px 20px;
-
-    color:
-        var(--light-silver);
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--blood-red),
-            #4A0505
-        );
-
-    border:
-        1px solid
-        var(--silver);
-
-    font-weight:
-        700;
-
-    cursor:
-        pointer;
-
-    transition:
-        all 0.2s ease;
-
-}
-
-
-button:hover {
-
-    color:
-        var(--gold);
-
-    background:
-        var(--blood-red);
-
-    border-color:
-        var(--gold);
-
-}
-
-
-/* =========================================================
    FOOTER
    ========================================================= */
 
@@ -880,18 +993,35 @@ footer {
     padding:
         40px 20px;
 
-    color:
-        var(--dark-silver);
-
-    font-size:
-        12px;
-
     text-align:
         center;
 
     border-top:
         1px solid
         #302020;
+
+    color:
+        var(--dark-silver);
+
+    font-size:
+        12px;
+
+}
+
+
+.footer-title {
+
+    margin-bottom:
+        5px;
+
+    color:
+        var(--silver);
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        2px;
 
 }
 
@@ -900,22 +1030,23 @@ footer {
    MOBILE
    ========================================================= */
 
-@media (
-    max-width: 700px
-) {
+@media (max-width: 700px) {
 
+    .container {
 
-    /* HERO */
-
-    .hero {
-
-        padding:
-            30px 15px;
+        width:
+            94%;
 
     }
 
 
-    /* LOGO */
+    .hero {
+
+        padding:
+            30px 10px;
+
+    }
+
 
     .server-logo {
 
@@ -928,8 +1059,6 @@ footer {
     }
 
 
-    /* SERVER NAME */
-
     .hero h1 {
 
         font-size:
@@ -941,9 +1070,7 @@ footer {
     }
 
 
-    /* EVENT TITLE */
-
-    .hero p {
+    .event-title {
 
         font-size:
             12px;
@@ -954,7 +1081,43 @@ footer {
     }
 
 
-    /* PODIUM */
+    .hero::after {
+
+        width:
+            160px;
+
+    }
+
+
+    .countdown-box {
+
+        padding:
+            22px 12px;
+
+    }
+
+
+    #countdown {
+
+        font-size:
+            30px;
+
+        letter-spacing:
+            1px;
+
+    }
+
+
+    .section-title {
+
+        font-size:
+            20px;
+
+        margin-top:
+            30px;
+
+    }
+
 
     #podium {
 
@@ -975,7 +1138,13 @@ footer {
     }
 
 
-    /* TABLE */
+    .event-info {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
 
     th,
     td {
@@ -1000,8 +1169,6 @@ footer {
     }
 
 
-    /* RANK */
-
     td.rank {
 
         width:
@@ -1010,15 +1177,53 @@ footer {
     }
 
 
-    /* COUNTDOWN */
+    td.reward {
+
+        font-size:
+            11px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .server-logo {
+
+        width:
+            95px;
+
+        height:
+            95px;
+
+    }
+
+
+    .hero h1 {
+
+        font-size:
+            25px;
+
+    }
+
+
+    .event-title {
+
+        font-size:
+            10px;
+
+    }
+
 
     #countdown {
 
         font-size:
-            30px;
-
-        letter-spacing:
-            1px;
+            24px;
 
     }
 
