@@ -4,31 +4,25 @@
    BLOOD RED / SILVER / GOLD
    ========================================================= */
 
-
-/* =========================================================
-   VARIABLES
-   ========================================================= */
-
 :root {
 
-    --blood-red: #7A0C0C;
+    --blood-red: #780808;
     --bright-red: #A91616;
-    --dark-red: #3A0505;
-    --deep-red: #160202;
+    --dark-red: #350303;
+    --deep-red: #120101;
 
-    --silver: #BFC3C7;
-    --light-silver: #F0F0F0;
+    --silver: #BFC0C2;
+    --light-silver: #EEEEEE;
     --dark-silver: #777777;
 
     --gold: #D4AF37;
-    --bright-gold: #F2D56B;
-    --dark-gold: #8D6C1F;
+    --bright-gold: #F1D36A;
+    --dark-gold: #8B691B;
 
     --black: #050505;
 
-    --panel: #100C0C;
-    --panel-light: #1B1313;
-
+    --panel: #120D0D;
+    --panel-light: #1D1414;
 }
 
 
@@ -40,11 +34,9 @@
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
-
 
 body {
 
@@ -64,13 +56,12 @@ body {
         radial-gradient(
             ellipse at top,
             #4A0707 0%,
-            #250303 22%,
+            #250303 25%,
             #100707 55%,
             #050505 100%
         );
 
     background-attachment: fixed;
-
 }
 
 
@@ -80,17 +71,11 @@ body {
 
 .hero {
 
-    width: 100%;
-
     text-align: center;
 
     padding:
         45px 20px 30px;
-
 }
-
-
-/* Keep everything centered */
 
 .hero-content {
 
@@ -99,7 +84,6 @@ body {
     flex-direction: column;
 
     align-items: center;
-
 }
 
 
@@ -120,10 +104,6 @@ body {
     margin:
         0 auto 16px;
 
-    /*
-       Gold glow around the logo
-    */
-
     filter:
         drop-shadow(
             0 0 18px
@@ -131,10 +111,9 @@ body {
                 212,
                 175,
                 55,
-                0.35
+                0.4
             )
         );
-
 }
 
 
@@ -173,7 +152,6 @@ body {
             12,
             0.9
         );
-
 }
 
 
@@ -197,7 +175,6 @@ body {
 
     letter-spacing:
         4px;
-
 }
 
 
@@ -226,22 +203,11 @@ body {
             var(--gold),
             transparent
         );
-
-    box-shadow:
-
-        0 0 10px
-        rgba(
-            212,
-            175,
-            55,
-            0.35
-        );
-
 }
 
 
 /* =========================================================
-   MAIN CONTAINER
+   CONTAINER
    ========================================================= */
 
 .container {
@@ -254,7 +220,6 @@ body {
 
     margin:
         0 auto;
-
 }
 
 
@@ -263,8 +228,6 @@ body {
    ========================================================= */
 
 .countdown-box {
-
-    position: relative;
 
     text-align: center;
 
@@ -283,19 +246,15 @@ body {
         );
 
     border:
-        1px solid
-        #552020;
+        1px solid #552020;
 
     border-top:
-        2px solid
-        var(--gold);
+        2px solid var(--gold);
 
     border-bottom:
-        2px solid
-        var(--blood-red);
+        2px solid var(--blood-red);
 
     box-shadow:
-
         0 12px 35px
         rgba(
             0,
@@ -303,11 +262,7 @@ body {
             0,
             0.65
         );
-
 }
-
-
-/* Countdown label */
 
 .countdown-label {
 
@@ -322,11 +277,7 @@ body {
 
     letter-spacing:
         3px;
-
 }
-
-
-/* Countdown */
 
 #countdown {
 
@@ -348,21 +299,7 @@ body {
 
     letter-spacing:
         3px;
-
-    text-shadow:
-
-        0 0 15px
-        rgba(
-            212,
-            175,
-            55,
-            0.45
-        );
-
 }
-
-
-/* Last updated */
 
 #lastUpdated {
 
@@ -374,7 +311,6 @@ body {
 
     font-size:
         11px;
-
 }
 
 
@@ -405,7 +341,6 @@ body {
 
     letter-spacing:
         2px;
-
 }
 
 
@@ -426,11 +361,7 @@ body {
 
     gap:
         15px;
-
 }
-
-
-/* Podium card */
 
 .podium-card {
 
@@ -464,15 +395,13 @@ body {
         );
 
     border:
-        1px solid
-        #555;
+        1px solid #555;
 
     border-top:
         3px solid
         var(--silver);
 
     box-shadow:
-
         0 8px 25px
         rgba(
             0,
@@ -482,13 +411,8 @@ body {
         );
 
     transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
-
+        transform 0.2s ease;
 }
-
-
-/* Hover */
 
 .podium-card:hover {
 
@@ -497,11 +421,7 @@ body {
 
     border-top-color:
         var(--gold);
-
 }
-
-
-/* First place */
 
 .podium-card.first {
 
@@ -515,34 +435,13 @@ body {
             #302508,
             #110D05
         );
-
-    box-shadow:
-
-        0 0 30px
-        rgba(
-            212,
-            175,
-            55,
-            0.15
-        );
-
 }
-
-
-/* Medal */
 
 .medal {
 
     font-size:
         42px;
-
-    line-height:
-        1;
-
 }
-
-
-/* Place */
 
 .podium-place {
 
@@ -557,20 +456,14 @@ body {
 
     letter-spacing:
         2px;
-
 }
-
 
 .podium-card.first
 .podium-place {
 
     color:
         var(--gold);
-
 }
-
-
-/* IGN */
 
 .podium-ign {
 
@@ -585,11 +478,7 @@ body {
 
     font-weight:
         900;
-
 }
-
-
-/* Referral count */
 
 .podium-count {
 
@@ -601,7 +490,6 @@ body {
 
     font-size:
         13px;
-
 }
 
 
@@ -623,11 +511,9 @@ body {
         );
 
     border:
-        1px solid
-        #3D3030;
+        1px solid #3D3030;
 
     box-shadow:
-
         0 15px 40px
         rgba(
             0,
@@ -635,22 +521,16 @@ body {
             0,
             0.6
         );
-
 }
-
 
 .table-wrapper {
 
-    width: 100%;
+    width:
+        100%;
 
-    overflow-x: auto;
-
+    overflow-x:
+        auto;
 }
-
-
-/* =========================================================
-   TABLE
-   ========================================================= */
 
 table {
 
@@ -659,9 +539,7 @@ table {
 
     border-collapse:
         collapse;
-
 }
-
 
 thead {
 
@@ -672,9 +550,7 @@ thead {
             var(--dark-red),
             #210303
         );
-
 }
-
 
 th {
 
@@ -696,15 +572,10 @@ th {
     text-align:
         left;
 
-    text-transform:
-        uppercase;
-
     border-bottom:
         1px solid
         var(--blood-red);
-
 }
-
 
 td {
 
@@ -715,19 +586,8 @@ td {
         var(--light-silver);
 
     border-bottom:
-        1px solid
-        #2B2222;
-
+        1px solid #2B2222;
 }
-
-
-tbody tr {
-
-    transition:
-        background 0.2s ease;
-
-}
-
 
 tbody tr:hover {
 
@@ -738,27 +598,16 @@ tbody tr:hover {
             12,
             0.20
         );
-
 }
 
-
-/* Rank */
-
 td.rank {
-
-    width:
-        90px;
 
     color:
         var(--gold);
 
     font-weight:
         900;
-
 }
-
-
-/* Referrals */
 
 td.referrals {
 
@@ -767,11 +616,7 @@ td.referrals {
 
     font-weight:
         800;
-
 }
-
-
-/* Reward */
 
 td.reward {
 
@@ -780,44 +625,47 @@ td.reward {
 
     font-weight:
         700;
-
 }
-
-
-/* Top 3 */
 
 tbody tr:nth-child(1) {
 
     border-left:
         3px solid
         var(--gold);
-
 }
-
 
 tbody tr:nth-child(2) {
 
     border-left:
         3px solid
         var(--silver);
-
 }
-
 
 tbody tr:nth-child(3) {
 
     border-left:
         3px solid
         #A97142;
+}
 
+.loading {
+
+    padding:
+        35px;
+
+    text-align:
+        center;
+
+    color:
+        var(--silver);
 }
 
 
 /* =========================================================
-   EVENT INFORMATION
+   GUIDELINES
    ========================================================= */
 
-.event-info {
+.guidelines {
 
     display:
         grid;
@@ -830,16 +678,20 @@ tbody tr:nth-child(3) {
 
     gap:
         15px;
-
-    margin-bottom:
-        45px;
-
 }
 
 
-/* Card */
+/* Guideline box */
 
-.info-card {
+.guideline-card {
+
+    position: relative;
+
+    display:
+        flex;
+
+    gap:
+        18px;
 
     padding:
         22px;
@@ -848,7 +700,7 @@ tbody tr:nth-child(3) {
 
         linear-gradient(
             145deg,
-            #1C1414,
+            #1D1414,
             #0C0909
         );
 
@@ -867,20 +719,21 @@ tbody tr:nth-child(3) {
             0,
             0,
             0,
-            0.4
+            0.45
         );
 
     transition:
         transform 0.2s ease,
         border-color 0.2s ease;
-
 }
 
 
-.info-card:hover {
+/* Hover */
+
+.guideline-card:hover {
 
     transform:
-        translateY(-2px);
+        translateY(-3px);
 
     border-left-color:
         var(--gold);
@@ -888,55 +741,87 @@ tbody tr:nth-child(3) {
 }
 
 
-/* Icon / label */
+/* Warning card */
 
-.info-icon {
+.guideline-card.warning {
 
-    display:
-        inline-block;
-
-    margin-bottom:
-        12px;
-
-    padding:
-        4px 8px;
-
-    color:
-        var(--dark-red);
+    border-left-color:
+        var(--bright-red);
 
     background:
+
+        linear-gradient(
+            145deg,
+            #260909,
+            #0D0505
+        );
+}
+
+
+/* Number */
+
+.guideline-number {
+
+    flex-shrink: 0;
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
         var(--gold);
 
+    background:
+        #100606;
+
+    border:
+        1px solid
+        var(--dark-gold);
+
     font-size:
-        9px;
+        13px;
 
     font-weight:
         900;
 
-    letter-spacing:
-        1px;
-
 }
 
 
-/* Card title */
+/* Guideline content */
 
-.info-card h3 {
+.guideline-content {
+
+    flex:
+        1;
+}
+
+
+/* Guideline title */
+
+.guideline-content h3 {
 
     margin:
-        0 0 9px;
+        0 0 8px;
 
     color:
         var(--gold);
 
     font-size:
-        14px;
+        16px;
 
     font-weight:
         800;
-
-    letter-spacing:
-        1px;
 
     text-transform:
         uppercase;
@@ -944,9 +829,9 @@ tbody tr:nth-child(3) {
 }
 
 
-/* Card text */
+/* Guideline text */
 
-.info-card p {
+.guideline-content p {
 
     margin:
         0;
@@ -958,26 +843,94 @@ tbody tr:nth-child(3) {
         14px;
 
     line-height:
-        1.6;
+        1.65;
+}
 
+
+/* Strong text */
+
+.guideline-content strong {
+
+    color:
+        var(--light-silver);
 }
 
 
 /* =========================================================
-   LOADING
+   SUMMARY
    ========================================================= */
 
-.loading {
+.summary-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:
+        15px;
+
+    margin-bottom:
+        45px;
+}
+
+.summary-card {
 
     padding:
-        35px;
-
-    color:
-        var(--silver);
+        25px 15px;
 
     text-align:
         center;
 
+    background:
+
+        linear-gradient(
+            145deg,
+            #211919,
+            #0C0A0A
+        );
+
+    border:
+        1px solid
+        #3D3030;
+
+    border-top:
+        2px solid
+        var(--gold);
+}
+
+.summary-card span {
+
+    display:
+        block;
+
+    margin-bottom:
+        8px;
+
+    color:
+        var(--dark-silver);
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        2px;
+}
+
+.summary-card strong {
+
+    color:
+        var(--gold);
+
+    font-size:
+        16px;
 }
 
 
@@ -1005,9 +958,7 @@ footer {
 
     font-size:
         12px;
-
 }
-
 
 .footer-title {
 
@@ -1022,7 +973,6 @@ footer {
 
     letter-spacing:
         2px;
-
 }
 
 
@@ -1036,17 +986,13 @@ footer {
 
         width:
             94%;
-
     }
-
 
     .hero {
 
         padding:
             30px 10px;
-
     }
-
 
     .server-logo {
 
@@ -1055,9 +1001,7 @@ footer {
 
         height:
             110px;
-
     }
-
 
     .hero h1 {
 
@@ -1066,9 +1010,7 @@ footer {
 
         letter-spacing:
             2px;
-
     }
-
 
     .event-title {
 
@@ -1077,25 +1019,13 @@ footer {
 
         letter-spacing:
             2px;
-
     }
-
 
     .hero::after {
 
         width:
             160px;
-
     }
-
-
-    .countdown-box {
-
-        padding:
-            22px 12px;
-
-    }
-
 
     #countdown {
 
@@ -1104,47 +1034,31 @@ footer {
 
         letter-spacing:
             1px;
-
     }
-
-
-    .section-title {
-
-        font-size:
-            20px;
-
-        margin-top:
-            30px;
-
-    }
-
 
     #podium {
 
         grid-template-columns:
             1fr;
-
     }
-
 
     .podium-card {
 
         min-height:
             120px;
-
-        padding:
-            18px;
-
     }
 
-
-    .event-info {
+    .guidelines {
 
         grid-template-columns:
             1fr;
-
     }
 
+    .summary-grid {
+
+        grid-template-columns:
+            1fr;
+    }
 
     th,
     td {
@@ -1154,9 +1068,7 @@ footer {
 
         font-size:
             12px;
-
     }
-
 
     th {
 
@@ -1165,30 +1077,13 @@ footer {
 
         letter-spacing:
             1px;
-
-    }
-
-
-    td.rank {
-
-        width:
-            55px;
-
-    }
-
-
-    td.reward {
-
-        font-size:
-            11px;
-
     }
 
 }
 
 
 /* =========================================================
-   VERY SMALL PHONES
+   SMALL PHONES
    ========================================================= */
 
 @media (max-width: 400px) {
@@ -1200,31 +1095,24 @@ footer {
 
         height:
             95px;
-
     }
-
 
     .hero h1 {
 
         font-size:
             25px;
-
     }
-
-
-    .event-title {
-
-        font-size:
-            10px;
-
-    }
-
 
     #countdown {
 
         font-size:
             24px;
+    }
 
+    .guideline-card {
+
+        padding:
+            18px;
     }
 
 }
